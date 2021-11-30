@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: datakit
+Version: 0.1
+Summary: A collection of tools for data preprocessing. Current implementation returns files compatible in training an SSD Tensorflow Model
+Home-page: https://github.com/TaliyaB/Datakit
+Author: TaliyaB
+Author-email: borjalchristallinejoie.com
+License: MIT
+Platform: UNKNOWN
+License-File: LICENSE.txt
+
+UNKNOWN
+
