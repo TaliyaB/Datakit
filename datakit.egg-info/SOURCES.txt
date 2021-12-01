@@ -5,7 +5,7 @@ Datakit/__init__.py
 Datakit/convert.py
 Datakit/convert_to_tfrecord.py
 Datakit/count.py
-Datakit/illustrate.py
+Datakit/visualizer.py
 datakit.egg-info/PKG-INFO
 datakit.egg-info/SOURCES.txt
 datakit.egg-info/dependency_links.txt

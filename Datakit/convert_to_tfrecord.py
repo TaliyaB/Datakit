@@ -18,21 +18,21 @@ from object_detection.dataset_tools import tf_record_creation_util
 
 class shardTFRecord():
 	def __init__(self, 
-		base_directory,
-		csv_file_input, 
-		pbtxt_labels,
-		data_type,
-		all_gen_dir,
-		num_of_shards):
+		base_directory=os.getcwd(),
+		csv_file_input=None,
+		pbtxt_labels=None,
+		data_type=None,
+		all_gen_dir=None,
+		num_of_shards=1):
 
-		self.base_directory = os.getcwd()
+		self.base_directory = base_directory
 		self.csv_file_input = csv_file_input
 		self.pbtxt_labels = pbtxt_labels
 		self.data_type = data_type
 		self.all_gen_dir = all_gen_dir
 		self.num_of_shards = num_of_shards
 
-		self.output_filebase=os.path.join(self.base_directory, 'Sharded_TFRecord', '{}.tfrecord'.format(self.data_type))
+		self.output_filebase=os.path.join(self.base_directory, 'all_generated', '{}.tfrecord'.format(self.data_type))
 		self.labelmap_dir = os.path.join(self.base_directory, self.pbtxt_labels)
 		self.labelmap_dict = label_map_util.get_label_map_dict(self.labelmap_dir)
 		self.csv_filename = os.path.join(self.base_directory, self.csv_file_input)
@@ -52,7 +52,7 @@ class shardTFRecord():
 		image = Image.open(encoded_jpg_io)
 		width, height = image.size
 
-		filename = group.filename.encode('utf8')
+		filename = self.group.filename.encode('utf8')
 		image_format = b'jpg'
 		xmins=[]
 		xmaxs=[]
@@ -61,7 +61,7 @@ class shardTFRecord():
 		classes_text=[]
 		classes=[]
 
-		for index, row in group.object.iterrows():
+		for index, row in self.group.object.iterrows():
 			xmins.append(float(row['xmin']/width))
 			xmaxs.append(float(row['xmax']/width))
 			ymins.append(float(row['ymin']/height))
@@ -90,7 +90,7 @@ class shardTFRecord():
 		grouped = self.split()
 
 		with contextlib2.ExitStack() as tf_record_close_stack:
-			output_tf_records = tf_record_creation_util.open_sharded_output_tfrecords(
+			output_tfrecords = tf_record_creation_util.open_sharded_output_tfrecords(
 					tf_record_close_stack,  self.output_filebase, self.num_of_shards
 				)
 			for group in grouped:
