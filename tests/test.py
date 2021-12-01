@@ -23,5 +23,5 @@ tfr.convert()
 
 """Test Visualizer
 """
-vis = visualizer.Visualizer(csv_file="all_generated\\Train.csv", html_file='toolbar.html')
+vis = visualizer.Visualizer(csv_file="all_generated\\Train.csv", html_file='Train.html')
 vis.graph()
