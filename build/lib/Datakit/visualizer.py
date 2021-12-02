@@ -42,24 +42,41 @@ class Visualizer:
         train_symptoms = self.df_train['class'].value_counts().index.tolist()
         train_symptoms_freq = self.df_train['class'].value_counts().values.tolist()
         train_zipped = list(zip(train_symptoms, train_symptoms_freq))
-        train_index = [i for i in range(len(train_symptoms))]
-        train_df = pd.DataFrame(index=train_index, data= train_zipped, columns=['Symptoms', 'Frequency'])
+        train_df = pd.DataFrame(index=train_symptoms, data= train_zipped, columns=['Symptoms', 'Frequency'])
 
         #val
         val_symptoms = self.df_val['class'].value_counts().index.tolist()
         val_symptoms_freq = self.df_val['class'].value_counts().values.tolist()
         val_zipped = list(zip(val_symptoms, val_symptoms_freq))
-        val_index = [j for j in range(len(val_symptoms))]
-        val_df = pd.DataFrame(index=val_index, data=val_zipped, columns=['Symptoms', 'Frequency'])
+        val_df = pd.DataFrame(index=val_symptoms, data=val_zipped, columns=['Symptoms', 'Frequency'])
         return  train_df, val_df
 
     def compare_data(self):
+        #count instances of symptoms in train and val
         train_df , val_df = self.count_instances()
-        print(val_df)
+        train_df= train_df.sort_values(by=['Symptoms'])
+        val_df=val_df.sort_values(by=['Symptoms'])
+        #print(train_df,val_df)
+
+        #combine symptoms
         all_symptoms=train_df['Symptoms'].values.tolist() + val_df['Symptoms'].values.tolist()
-        all_symptoms= set(all_symptoms)
-        #all_symptoms = set()
-        print(all_symptoms, len(all_symptoms))
+        all_symptoms= sorted(set(all_symptoms))
+
+        #make dataframe from symptoms
+        train_vs_val_cols = ['Train', 'Val']
+        tmp = [0] * len(all_symptoms)
+        train_vs_val_zipped = list(zip(tmp, tmp))
+        train_vs_val_df = pd.DataFrame(index=all_symptoms, data=train_vs_val_zipped, columns=train_vs_val_cols)
+
+
+        #combine dataFrame train
+        for n in train_df['Symptoms'].values.tolist():
+            train_vs_val_df.loc[n]['Train']=train_df.loc[n]['Frequency']
+        for m in val_df['Symptoms'].values.tolist():
+            train_vs_val_df.loc[m]['Val'] = val_df.loc[m]['Frequency']
+
+        print(train_vs_val_df)
+
         return
 
     def graph(self):
