@@ -23,8 +23,9 @@ tfr.convert()
 
 """Test Visualizer
 """
-vis = visualizer.Visualizer(csv_file="all_generated\\Train.csv",
+vis = visualizer.Visualizer(csv_file="Train_vs_Val.csv",
                             train_csv="all_generated\\Train.csv",
                             val_csv="all_generated\\Val.csv",
+                            save_as_png = "Train_vs_Val.png",
                             html_file='Train.html')
 vis.graph()

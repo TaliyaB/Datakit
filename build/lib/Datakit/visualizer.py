@@ -4,7 +4,7 @@ import numpy as np
 from bokeh.plotting import figure, show, output_file, ColumnDataSource
 from bokeh.models import HoverTool
 import pandas_bokeh
-from bokeh.io import curdoc
+from bokeh.io import curdoc, export_png
 
 
 class Visualizer:
@@ -13,6 +13,7 @@ class Visualizer:
                 train_csv =None,
                 val_csv = None,
                 csv_file=None,
+                save_as_png= None,
                 html_file = None):
 
         self.base_directory = base_directory
@@ -20,23 +21,13 @@ class Visualizer:
         self.html_file = html_file
         self.train_csv = train_csv
         self.val_csv = val_csv
+        self.save_as_png = save_as_png
 
-        self.data = pd.read_csv(self.csv_file)
         self.df_train = pd.read_csv(self.train_csv)
         self.df_val = pd.read_csv(self.val_csv)
         self.df_train_vs_val = None
 
     def count_instances(self):
-        symptom_freq=self.data['class'].value_counts().index.tolist()
-        count_freq=self.data['class'].value_counts().values.tolist()
-
-        #dataframe: Creates dataframe with columns=['Symptoms', 'Frequency']
-        #symptom_freq=df['class'].value_counts().index.tolist()
-        #count_freq=df['class'].value_counts().values.tolist()
-
-        index= [i for i in range(len(symptom_freq))]
-        zipped = list(zip(symptom_freq,count_freq))
-        df_xy = pd.DataFrame(index=index, data=zipped, columns=['Symptoms', 'Frequency'])
 
         #train
         train_symptoms = self.df_train['class'].value_counts().index.tolist()
@@ -75,33 +66,12 @@ class Visualizer:
 
         train_vs_val_df = train_vs_val_df.reset_index()
         print(train_vs_val_df)
+        path = os.path.join(self.base_directory, 'all_generated' , self.csv_file)
+        train_vs_val_df.to_csv(path, index=True)
         return train_vs_val_df
 
     def graph(self):
-        """
-        #Visualizer graph
-        path = os.path.join(self.base_directory, 'all_generated' ,self.html_file)
-        output_file(path)
-        curdoc().theme =  'dark_minimal'
-        src = ColumnDataSource(self.count_instances())
-        p = figure()
-        p.circle(x='index', y='Frequency',
-                 source=src, size=6, legend='Train')
-        p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
-        p.xaxis.axis_label = 'index'
-        p.yaxis.axis_label = 'Frequency'
-        p.xaxis.major_label_orientation = "vertical"
-        hover = HoverTool()
-        hover.tooltips = [
-            ('Frequency', '@Frequency'),
-            ('Symptom', '@Symptoms')
-        ]
-        p.add_tools(hover)
 
-        show(p)
-
-        :return:
-        """
         path = os.path.join(self.base_directory, 'all_generated' ,self.html_file)
         output_file(path)
         curdoc().theme =  'dark_minimal'
@@ -116,8 +86,8 @@ class Visualizer:
         p.line(x='index', y='Train', source=src,  line_width=1)
         #val
         p.circle(x='index', y='Val',
-                 source=src, size=6, color='red', legend='Train Annotations')
-        p.line(x='index', y='Val', source=src,  line_width=1)
+                 source=src, size=6, color='red', legend='Val Annotations')
+        p.line(x='index', y='Val', source=src, color='red', line_width=1)
 
         p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
         p.xaxis.axis_label = 'index'
@@ -130,5 +100,8 @@ class Visualizer:
         ]
         p.add_tools(hover)
 
+        #save png
+
+        #
         show(p)
 
