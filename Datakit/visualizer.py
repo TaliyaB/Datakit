@@ -73,8 +73,8 @@ class Visualizer:
         for m in val_df['Symptoms'].values.tolist():
             train_vs_val_df.loc[m]['Val'] = val_df.loc[m]['Frequency']
 
+        train_vs_val_df = train_vs_val_df.reset_index()
         print(train_vs_val_df)
-
         return train_vs_val_df
 
     def graph(self):
@@ -105,4 +105,30 @@ class Visualizer:
         path = os.path.join(self.base_directory, 'all_generated' ,self.html_file)
         output_file(path)
         curdoc().theme =  'dark_minimal'
-        src = ColumnDataSource(self.compare_data())
+        df = self.compare_data()
+        src = ColumnDataSource(df)
+        idx = src.data['index'].tolist()
+
+        p= figure(x_range=idx)
+        # train
+        p.circle(x='index', y='Train',
+                 source=src, size=6, legend='Train Annotations')
+        p.line(x='index', y='Train', source=src,  line_width=1)
+        #val
+        p.circle(x='index', y='Val',
+                 source=src, size=6, legend='Train Annotations')
+        p.line(x='index', y='Val', source=src,  line_width=1)
+
+        p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
+        p.xaxis.axis_label = 'index'
+        p.yaxis.axis_label = 'Frequency'
+        p.xaxis.major_label_orientation = "vertical"
+        hover = HoverTool()
+        hover.tooltips = [
+            ('Frequency', '@Train'),
+            ('Symptom', '@index')
+        ]
+        p.add_tools(hover)
+
+        show(p)
+

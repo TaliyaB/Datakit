@@ -27,4 +27,4 @@ vis = visualizer.Visualizer(csv_file="all_generated\\Train.csv",
                             train_csv="all_generated\\Train.csv",
                             val_csv="all_generated\\Val.csv",
                             html_file='Train.html')
-vis.compare_data()
+vis.graph()

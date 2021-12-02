@@ -56,7 +56,6 @@ class Visualizer:
         train_df , val_df = self.count_instances()
         train_df= train_df.sort_values(by=['Symptoms'])
         val_df=val_df.sort_values(by=['Symptoms'])
-        #print(train_df,val_df)
 
         #combine symptoms
         all_symptoms=train_df['Symptoms'].values.tolist() + val_df['Symptoms'].values.tolist()
@@ -68,16 +67,15 @@ class Visualizer:
         train_vs_val_zipped = list(zip(tmp, tmp))
         train_vs_val_df = pd.DataFrame(index=all_symptoms, data=train_vs_val_zipped, columns=train_vs_val_cols)
 
-
         #combine dataFrame train
         for n in train_df['Symptoms'].values.tolist():
             train_vs_val_df.loc[n]['Train']=train_df.loc[n]['Frequency']
         for m in val_df['Symptoms'].values.tolist():
             train_vs_val_df.loc[m]['Val'] = val_df.loc[m]['Frequency']
 
+        train_vs_val_df = train_vs_val_df.reset_index()
         print(train_vs_val_df)
-
-        return
+        return train_vs_val_df
 
     def graph(self):
         """
@@ -104,11 +102,27 @@ class Visualizer:
 
         :return:
         """
+        path = os.path.join(self.base_directory, 'all_generated' ,self.html_file)
+        output_file(path)
+        curdoc().theme =  'dark_minimal'
+        df = self.compare_data()
+        src = ColumnDataSource(df)
+        idx = src.data['index'].tolist()
 
-        #count_instances(train)
-        #count_instances(val)
-        #create dummy df(Symptoms, Train, Val)
-        #make set of symptoms in count_instances(train)  and count_instances(val)
-        #supply frequency
-        #show graph
-        #show table
+        p= figure(x_range=idx)
+        p.circle(x='index', y='Train',
+                 source=src, size=6, legend='Train Annotations')
+        p.line(x='index', y='Train', source=src,  line_width=1)
+        p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
+        p.xaxis.axis_label = 'index'
+        p.yaxis.axis_label = 'Frequency'
+        p.xaxis.major_label_orientation = "vertical"
+        hover = HoverTool()
+        hover.tooltips = [
+            ('Frequency', '@Train'),
+            ('Symptom', '@index')
+        ]
+        p.add_tools(hover)
+
+        show(p)
+
