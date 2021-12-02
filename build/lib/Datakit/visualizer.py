@@ -110,9 +110,15 @@ class Visualizer:
         idx = src.data['index'].tolist()
 
         p= figure(x_range=idx)
+        # train
         p.circle(x='index', y='Train',
                  source=src, size=6, legend='Train Annotations')
         p.line(x='index', y='Train', source=src,  line_width=1)
+        #val
+        p.circle(x='index', y='Val',
+                 source=src, size=6, color='red', legend='Train Annotations')
+        p.line(x='index', y='Val', source=src,  line_width=1)
+
         p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
         p.xaxis.axis_label = 'index'
         p.yaxis.axis_label = 'Frequency'

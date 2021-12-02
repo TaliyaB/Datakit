@@ -116,7 +116,7 @@ class Visualizer:
         p.line(x='index', y='Train', source=src,  line_width=1)
         #val
         p.circle(x='index', y='Val',
-                 source=src, size=6, legend='Train Annotations')
+                 source=src, size=6, color='red', legend='Train Annotations')
         p.line(x='index', y='Val', source=src,  line_width=1)
 
         p.title.text = 'Annotation Frequency of Abaca Viral Disease Symptoms'
