@@ -99,6 +99,6 @@ class shardTFRecord():
 				labelmap_dict = self.labelmap_dict
 				tf_example = self.create_tf_example()
 				output_shard_index = index%int(self.num_of_shards)
-				output_tfrecords[output_shard_index].write(tf.tf_example.SerializeToString())
+				output_tfrecords[output_shard_index].write(tf_example.SerializeToString())
 		output_tfrecords[output_shard_index].close()
 		print("Success {}".format(output_shard_index))

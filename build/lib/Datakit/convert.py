@@ -50,9 +50,9 @@ class Parser:
 				ymin = int(member[4][1].text)
 				xmax = int(member[4][2].text)
 				ymax = int(member[4][3].text)
-
 				value = (filename, width, height, obj_class, xmin, ymin, xmax, ymax)
-				to_df.append(value)
+				if (os.path.exists(filename)):
+					to_df.append(value)
 		
 		xml_df = pd.DataFrame(to_df, columns = fields)
 		return xml_df
