@@ -76,6 +76,7 @@ class shardTFRecord():
 			'image/source_id' :dataset_util.bytes_feature(filename),
 			'image/encoded' :dataset_util.bytes_feature(encoded_jpg),
 			'image_format' :dataset_util.bytes_feature(image_format),
+			'image/object/bbox/xmin': dataset_util.float_list_feature(xmins),
 			'image/object/bbox/xmax': dataset_util.float_list_feature(xmaxs),
 			'image/object/bbox/ymin': dataset_util.float_list_feature(ymins),
 			'image/object/bbox/ymax': dataset_util.float_list_feature(ymaxs),
