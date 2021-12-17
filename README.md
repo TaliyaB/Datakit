@@ -39,10 +39,9 @@ vis.graph()
 3. **Create Labels.** Creates pbtxt and txt labels.
    - Sample:<br>
 ```
-vis = visualizer.Visualizer(csv_file="Train_vs_Val.csv", train_csv="all_generated\\Train.csv", val_csv="all_generated\\Val.csv",
-                            save_as_png = "Train_vs_Val.png",
-                            html_file='Train.html')
-vis.graph()
+labels = create_labels.Labels(labels_fname='symptoms', train_vs_val_csv='Train_vs_Val.csv')
+labels.create_pbtxt()
+labels.create_txt()
 ```
 4. **Create TFRecord.** TFREcord is a serialized data format required in training SSD TensorFlow models.
 ```
