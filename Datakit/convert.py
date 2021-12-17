@@ -40,6 +40,7 @@ class Parser:
 			root = tree.getroot()
 			filename = '{}/{}'.format(file_location, root.find('filename').text)
 			#filename = '{}\\{}'.format(file_location, root.find('filename').text)
+			print(filename)
 			width = int(root.find('size')[0].text)
 			height = int(root.find('size')[1].text)
 			print("Parsing ", filename)
