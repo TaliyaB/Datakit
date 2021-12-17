@@ -12,7 +12,8 @@ _Currently programmed for TensorFlow Object Detection API and the Abaca Disease 
 ![install](https://github.com/TaliyaB/Datakit/blob/master/screenshots/install.png?raw=true) <br>
 - Create a folder named `all_generated` in your base directory. Every generated file will be saved here. Sample:<br>
 ![allgen](https://github.com/TaliyaB/Datakit/blob/master/screenshots/all_gen.png?raw=true)<br>
-##**Usage**
+
+## **Usage**
 ***
 - Import :`from Datakit import convert, count, convert_to_tfrecord, visualizer, create_labels`
 - Steps:
