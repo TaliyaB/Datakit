@@ -25,21 +25,23 @@ class Parser:
 		self.data_set = data_set
 		self.all_gen_dir = all_gen_dir
 		self.mkdir = mkdir
+		print(self.base_directory)
 
 	def parse_xml(self):
 		to_df = []
 		fields = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
 		#file_location = '{}/{}'.format(self.base_directory, self.data_rel_directory)
 		file_location=os.path.join(self.base_directory, self.data_rel_directory)
-		#list_all_files = glob.glob('{}/*.xml'.format(file_location))
-		list_all_files = glob.glob('{}\\*.xml'.format(file_location))
+		list_all_files = glob.glob('{}/*.xml'.format(file_location))
+		#list_all_files = glob.glob('{}\\*.xml'.format(file_location))
 
 		#parse data
 		for xml_file in list_all_files:
 			tree = ET.parse(xml_file)
 			root = tree.getroot()
-			#filename = '{}/{}'.format(file_location, root.find('filename').text)
-			filename = '{}\\{}'.format(file_location, root.find('filename').text)
+			filename = '{}/{}'.format(file_location, root.find('filename').text)
+			#filename = '{}\\{}'.format(file_location, root.find('filename').text)
+			print(filename)
 			width = int(root.find('size')[0].text)
 			height = int(root.find('size')[1].text)
 			print("Parsing ", filename)
