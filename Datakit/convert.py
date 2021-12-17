@@ -25,6 +25,7 @@ class Parser:
 		self.data_set = data_set
 		self.all_gen_dir = all_gen_dir
 		self.mkdir = mkdir
+		print(self.base_directory)
 
 	def parse_xml(self):
 		to_df = []
