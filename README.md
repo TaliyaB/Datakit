@@ -9,9 +9,9 @@ _Currently programmed for TensorFlow Object Detection API and the Abaca Disease 
 - The project structure looks like this : <br>
 ![structure](https://github.com/TaliyaB/Datakit/blob/master/screenshots/structure.png?raw=true) 
 - Do `pip install .` in the directory where `setup.py` is located.
-![install]() <br>
+![install](https://github.com/TaliyaB/Datakit/blob/master/screenshots/install.png?raw=true) <br>
 - Create a folder named `all_generated` in your base directory. Every generated file will be saved here. Sample:<br>
-![all_gen]()<br>
+![allgen](https://github.com/TaliyaB/Datakit/blob/master/screenshots/all_gen.png?raw=true)<br>
 ##**Usage**
 ***
 - Import :`from Datakit import convert, count, convert_to_tfrecord, visualizer, create_labels`
