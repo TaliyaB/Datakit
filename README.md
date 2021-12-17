@@ -27,8 +27,8 @@ parsed_train_xml.xml_write_to_csv()
 ```
 2. **Create visualizer.** This creates an HTML Visualizer and CSV file that contains the count per class. 
    - Sample output:<br>
-   - ![visual]()
-   - ![csv_all_class]()
+   - ![visual](https://github.com/TaliyaB/Datakit/blob/master/screenshots/2.1.png?raw=true)
+   - ![csv_all_class](https://github.com/TaliyaB/Datakit/blob/master/screenshots/2.2.png?raw=true)
    - Sample:<br>
 ```
 vis = visualizer.Visualizer(csv_file="Train_vs_Val.csv", train_csv="all_generated\\Train.csv", val_csv="all_generated\\Val.csv",
